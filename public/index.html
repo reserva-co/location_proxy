@@ -4,16 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <title>FEC Demo</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
 <body>
   <div id='Photos'></div>
-  <div id="Reservations"></div>
-  <br>
-  <div id="reviews"></div>
-  <br>
-  <div id="location" style="margin-top: 335%"></div>
+  <img style="display: inline-block;" src="https://i.imgur.com/c1LNCeX.png"/>
+  <div style="display: inline-block;" id="Reservations"></div>
+  <div style="margin: auto; display:flex">
+    <div id="reviews"></div>
+  </div>
+  <div style="position: relative; display:table">
+    <div id="location"></div>
+  </div>
   <br>
   <!-- These two lines are just one way to get the React library running in the client's browser -->
   <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
@@ -28,11 +30,11 @@
     var id = parent.document.URL.match(/[0-9]*$/)
 
     ReactDOM.render(
-      React.createElement(Reviews.default, { id: id }),
+      React.createElement(Reviews.default, { id }),
       document.getElementById('reviews')
     );
     ReactDOM.render(
-      React.createElement(Location.default, { id: id }),
+      React.createElement(Location.default, { id }),
       document.getElementById('location')
     );
     ReservationsModule.default.ReactDOM.render(
@@ -40,7 +42,7 @@
       document.getElementById('Reservations')
     );
     ReactDOM.render(
-      React.createElement(Photos.default),
+      React.createElement(Photos.default, { listingId: id }),
       document.getElementById('Photos')
     );
   </script>
