@@ -3,48 +3,110 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>FEC Demo</title>
+  <title>RESERVA</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .container {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: stretch;
+      min-width: 1270px;
+    }
+
+    .left-column {
+      flex-wrap: nowrap;
+      width: calc(100% - 460px);
+    }
+
+    .right-column {
+      flex-wrap: nowrap;
+      box-sizing: border-box;
+      width: 450px;
+      padding-right: 50px;
+    }
+
+    #Booking {}
+
+    .fixed {
+      position: fixed;
+      top: 0;
+    }
+
+    #Reviews {
+      font-family: 'Helvetica';
+    }
+
+    #Location {
+      float: left;
+      clear: both;
+      width: 83%;
+    }
+  </style>
 </head>
 
-<body>
+<body style="margin: 0">
   <div id='Photos'></div>
-  <img style="display: inline-block;" src="https://i.imgur.com/c1LNCeX.png"/>
-  <div style="display: inline-block;" id="Reservations"></div>
-  <div style="margin: auto; display:flex">
-    <div id="reviews"></div>
+  <div class='container'>
+    <div class='left-column'>
+      <img style="width: 660px; display: inline-block; margin-left: 11%;" src="https://imgur.com/439JvwL.png" />
+      <div style="margin: auto; display:flex; margin-left: 15%;">
+        <div id="Reviews"></div>
+      </div>
+    </div>
+    <div class='right-column'>
+      <div id="Booking" style="display: inline-block;"></div>
+    </div>
   </div>
-  <div style="position: relative; display:table">
-    <div id="location"></div>
-  </div>
-  <br>
+  <div id="Location"></div>
   <!-- These two lines are just one way to get the React library running in the client's browser -->
   <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
-  <script src="http://localhost:3001/bundle.js"></script>
-  <script src="http://localhost:3002/main.js"></script>
-  <script src="http://localhost:3003/bundle.js"></script>
-  <script src="http://localhost:3004/bundle.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+    </script>
+  <script src="http://3.17.24.224:3001/bundle.js"></script>
+  <script src="http://54.183.177.3:3002/main.js"></script>
+  <script src="http://54.153.79.78:3003/bundle.js"></script>
+  <script src="http://54.67.24.50:3004/bundle.js"></script>
   <!-- see: https://reactjs.org/docs/react-without-jsx.html -->
   <script>
     var id = parent.document.URL.match(/[0-9]*$/)
 
     ReactDOM.render(
       React.createElement(Reviews.default, { id }),
-      document.getElementById('reviews')
+      document.getElementById('Reviews')
     );
     ReactDOM.render(
       React.createElement(Location.default, { id }),
-      document.getElementById('location')
+      document.getElementById('Location')
     );
     ReservationsModule.default.ReactDOM.render(
       ReservationsModule.default.React.createElement(ReservationsModule.default.ReservationsModule),
-      document.getElementById('Reservations')
+      document.getElementById('Booking')
     );
     ReactDOM.render(
       React.createElement(Photos.default, { listingId: id }),
       document.getElementById('Photos')
     );
+
+    $(window).on('scroll', function () {
+      const bottomStop = $('body').height() - 400;
+      if ($(window).scrollTop() > 350) {
+        $('#Booking').addClass("fixed");
+      } else {
+        $('#Booking').removeClass("fixed");
+      }
+      if ($(window).scrollTop() > bottomStop) {
+        $('#Booking').removeClass("fixed");
+        $('.right-column').css('align-self', 'flex-end');
+      } else {
+        $('.right-column').css('align-self', 'auto');
+      }
+    });
   </script>
 </body>
 
